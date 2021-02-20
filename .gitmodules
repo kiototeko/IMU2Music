@@ -1,0 +1,3 @@
+[submodule "code/Foley-Music"]
+	path = code/Foley-Music
+	url = https://github.com/kiototeko/Foley-Music.git
