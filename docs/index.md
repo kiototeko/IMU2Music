@@ -44,12 +44,12 @@ In this table they show their validation loss compared to other methods, accordi
 
 Embedding size/Maximum sequence length | Val. Loss | Val. Accuracy
 -------------------------------------- | ------ | ---------
-128 | 3.190127 | 0.201736
-256 | 3.373361 | 0.115365
-512 | 3.880303 | 0.044054
+128/128 | 3.190127 | 0.201736
+256/256 | 3.373361 | 0.115365
+512/512 | 3.880303 | 0.044054
 128/512 | 3.297678 | 0.054384
 
-In this first table we show both the validation loss and accuracy while using different embedding sizes and maximum sequence lengths. As we can see from the results, as the maximum sequence length increases the accuracy drops as the model has to predict a greater number of events per IMU readings. Likewise, as the embedding size increases, the number of parameters increases and therefore the training time also increases. The reason why at first we use the same embedding size as the maximum sequence length was to see the two carried some relationship, as in the original model from \[[4](#references)\], both values were the same. 
+In this first table we show both the validation loss and accuracy while using different embedding sizes and maximum sequence lengths. As we can see from the results, as the maximum sequence length and embedding size increases, the accuracy drops as well as the loss, as the model has to predict a greater number of events per IMU readings and has to learn an embedding with more parameters. But the interesting thing here is that if we increase the maximum sequence length but maintain the embedding size as 128, the loss doesn't increase that much with respect to the 128/128 case, while the accuracy does suffer. Qualitatively speaking, lower loss, not necessarily higher accuracy is what makes the music sound better, as we do not need the MIDI events to match perfectly, but just to resemble the original audio. The reason why at first we use the same embedding size as the maximum sequence length was to see if the two carried some relationship, as in the original model from \[[4](#references)\], both values were the same. Now we present another table were we show the same performance metrics as the past one, but in here we compare our different architectures:
 
 Method | Val. Loss | Val. Accuracy
 -------------------------------------- | ----- | ---------
@@ -57,14 +57,19 @@ LSTM | 4.096008 | 0.147893
 ConvTransformer | 3.417947 | 0.180035
 Transformer w frequency domain inputs | 3.235243 | 0.196701
 Transformer w/o frequency domain inputs | 3.190127 | 0.201736
+Transformer w FC | 3.148006 | 0.209896
+
+In this table the results regarding some changes in the arquitecture are shown. We can see that while in \[[11](#references)\] they proved that smaller dataset work better with LSTM than transformers, in this case that was not true. We can also see that whether the input is given in frequency domain or not, the model doesn't obtain any benefit.
+We can see here, that contrary to what one could have thought from the results in \[[11](#references)\], the LSTM does perform worse than the transformer. The ConvTransformer has is close to the baseline but still suffers from greater loss and it has a lot more parameters than the other models, making it slower to train, so we can safely discard it. Finally, we can see that converting the input series to the frequency domain does not really change the accuracy/loss that much, so there is no need to do that operation. Finally, we present a table showing the loss and accuracy with respect to the number of layers in the encoder/decoder of the transformer:
 
 Layers | Val. Loss | Val. Accuracy
 ---------------- | --------------- | -----------
 2 | 3.190127 | 0.201736
 4 | 3.122057 | 0.210069
-6 | 2.8 | 0.22
+6 | 2.772981 | 0.235590
 
-In this table the results regarding some changes in the arquitecture are shown. We can see that while in \[[11](#references)\] they proved that smaller dataset work better with LSTM than transformers, in this case that was not true. We can also see that whether the input is given in frequency domain or not, the model doesn't obtain any benefit.
+In this table it is evident that using more layers results in less loss and better accuracy, the problem is when hearing to the generated audio files, what the model is doing is generate the same sound no matter the input sequence, like a type of modal collapse, so that it doesn't really improve the model.
+
 
 The recordings are presented next:
 
