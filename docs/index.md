@@ -69,12 +69,12 @@ Layers | Val. Loss | Val. Accuracy
 ---------------- | --------------- | -----------
 2 | 3.190127 | 0.201736
 4 | 3.122057 | 0.210069
-6 | 2.772981 | 0.235590
+6 | 3.214685 | 0.212326
 
 In this table it is evident that using more layers results in less loss and better accuracy, the problem is that when one hears the generated audio files, what can notice that the models with 4 and 6 layers are having model collapse and producing exactly the same sound irrespective of the IMU readings. The best one, qualitatively, is instead the model with only 2 layers for encoder and 2 layers for decoder. This means we should be extra careful when basing our judgements only on the quantitative parts, as the qualitative part may matter more.
 
 
-A sample of audio recordings are available at to compare the original audio with the generated sound waves made by the model.
+A sample of audio recordings are available [here](https://github.com/kiototeko/IMU2Music/tree/main/data/recordings) to compare the original audio with the generated sound waves made by the model.
 
 ## Strengths
 
